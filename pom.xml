@@ -65,6 +65,8 @@
             <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
         </dependency>
 
+        <!--Netflix Eureka Client: Servisler bunu eklemeli-->
+
         <!--Lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
