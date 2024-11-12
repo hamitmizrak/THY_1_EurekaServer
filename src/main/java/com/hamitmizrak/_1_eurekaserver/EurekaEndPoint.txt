@@ -1,0 +1,11 @@
+
+http://localhost:8761
+
+# Eureka Server, kayıtlı servislerin durumlarını sorgulamak için bir REST API sunar.
+# Bu API’yi kullanarak tüm servislerin veya belirli bir servisin durumunu programatik olarak kontrol edebilirsiniz.
+http://localhost:8761/eureka/apps
+http://localhost:8761/eureka/apps/SERVIS_ADI
+
+# Eureka Server, mikroservislerin sağlığını daha kapsamlı bir şekilde izlemek için Spring Boot Actuator ile entegre edilebilir.
+# Actuator’ın /health endpoint’i üzerinden mikroservislerin sağlık durumunu alarak bu bilgiyi Eureka’ya iletmek mümkündür.
+http://localhost:8761/actuator/health
