@@ -3,6 +3,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+  <!--
+    | Spring Boot Sürümü | Spring Cloud Sürümü (Release Train)
+    | ++++++++++++++++++ | +++++++++++++++++++++++++++++++++++++++++
+    | 2.4.x              | 2020.0.x (Kod adı: Ilford)
+    | 2.5.x - 2.7.x      | 2021.x (Kod adı: Jubilee)
+    | 3.0.x - 3.2.x      | 2022.x (Kod adı: Kilburn)
+    | 3.3.x ve sonrası   | 2023.x ve sonrası
+    -->
+
     <!--parent-->
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -17,18 +26,27 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>_1_EurekaServer</name>
     <description>_1_EurekaServer</description>
-    <url/>
+
+    <url>https://github.com/hamitmizrak/THY_1_EurekaServer.git</url>
     <licenses>
-        <license/>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+            <distribution>repo</distribution>
+        </license>
     </licenses>
     <developers>
-        <developer/>
+        <developer>
+            <id>hamitmizrak</id>
+            <name>Hamit Mızrak</name>
+            <email>hamitmizrak@gmail.com</email>
+        </developer>
     </developers>
     <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
+        <connection>scm:git:https://github.com/hamitmizrak/THY_1_EurekaServer.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/hamitmizrak/THY_1_EurekaServer.git</developerConnection>
+        <tag>HEAD</tag>
+        <url>https://github.com/hamitmizrak/THY_1_EurekaServer.git</url>
     </scm>
 
     <!--
@@ -52,7 +70,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
 
-        <!--Eureka Server Semantic Version-->
+        <!-- spring-cloud.version Semantic Version-->
         <spring-cloud.version>2023.0.3</spring-cloud.version>
     </properties>
 
@@ -65,8 +83,6 @@
             <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
         </dependency>
 
-        <!--Netflix Eureka Client: Servisler bunu eklemeli-->
-
         <!--Lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -75,6 +91,7 @@
         </dependency>
 
         <!-- Spring Boot Starter Actuator for monitoring -->
+        <!--http://localhost:8761/actuator/health-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -89,43 +106,74 @@
     </dependencies>
 
     <!--dependencyManagement-->
+    <!--
+     dependencyManagement, bağımlılıkların sürüm yönetimini sağlar.
+     Bu bölümde tanımlanan sürümler, alt bağımlılıklar tarafından otomatik olarak kullanılır.
+     -->
     <dependencyManagement>
         <dependencies>
+            <!-- Spring Cloud bağımlılıklarının merkezi bir yerden yönetilmesi için ana bağımlılığı tanımlar -->
             <dependency>
+                <!-- Spring Cloud bağımlılıklarının grup kimliğini tanımlar -->
                 <groupId>org.springframework.cloud</groupId>
+
+                <!-- Spring Cloud projesine ait bağımlılıkların tanımlandığı toplu POM dosyasını belirtir -->
                 <artifactId>spring-cloud-dependencies</artifactId>
+
+                <!-- Spring Cloud sürümünü tanımlar, versiyon değeri değişken olarak belirlenmiştir.
+                     Bu değişken, pom.xml dosyasının başında veya properties kısmında tanımlanır. -->
                 <version>${spring-cloud.version}</version>
+
+                <!-- Bu bağımlılığın bir POM dosyası olarak kullanılacağını belirtir.
+                     POM türünde tanımlandığı için yalnızca bağımlılık sürüm yönetimi sağlar. -->
                 <type>pom</type>
+
+                <!-- Bu bağımlılığın diğer bağımlılıklarda otomatik olarak kullanılmasını sağlamak için "import" olarak işaretlenir.
+                     Böylece proje içerisinde Spring Cloud bağımlılıkları kolayca yönetilir. -->
                 <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
-    <!--build-->
+
+    <!-- build: Proje derleme ve paketleme işlemleri için yapılandırmaları içerir -->
     <build>
-        <!--apache tomcat manuel deployment için-->
+        <!-- defaultGoal: Proje başlatıldığında varsayılan olarak çalışacak hedefi tanımlar.
+             Burada, Spring Boot uygulamasının çalıştırılması için `spring-boot:run` hedefi belirlenmiştir. -->
         <defaultGoal>spring-boot:run</defaultGoal>
+
+        <!-- finalName: Proje oluşturulduğunda çıktı dosyasının adını belirtir.
+             ${project.artifactId}, Maven projesinde tanımlanan proje adını kullanır. -->
         <finalName>${project.artifactId}</finalName>
 
-        <!--plugins-->
+        <!--
+         mvn clean install :
+         -->
+        <!-- plugins: Derleme ve paketleme işlemlerinde kullanılacak Maven eklentilerini tanımlar -->
         <plugins>
-            <!-- for maven target 17: SonarQube 11 veya 17 yapmalısınız -->
+            <!-- Maven Compiler Plugin, kaynak kodunu belirli bir Java sürümünde derlemek için kullanılır -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.5.1</version>
                 <configuration>
+                    <!-- source: Kaynak kodunun yazıldığı Java sürümünü belirtir, burada Java 17 olarak ayarlanmıştır -->
                     <source>17</source>
+                    <!-- target: Derlenen kodun çalışacağı Java sürümünü belirtir, burada Java 17 olarak ayarlanmıştır -->
                     <target>17</target>
                 </configuration>
             </plugin>
 
+            <!-- Spring Boot Maven Plugin, Spring Boot uygulamalarını başlatmak ve paketlemek için kullanılır -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <!-- excludes: Paketlemeden hariç tutulacak bağımlılıkları belirtir -->
                     <excludes>
                         <exclude>
+                            <!-- Lombok bağımlılığını paketlemeden hariç tutar.
+                                 Lombok yalnızca geliştirme sırasında kullanılan bir bağımlılıktır, uygulama çalıştırma sırasında gerekmez -->
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                         </exclude>
@@ -135,3 +183,4 @@
         </plugins>
     </build>
 </project>
+
