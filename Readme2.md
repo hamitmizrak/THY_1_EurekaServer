@@ -31,3 +31,16 @@ Bu teknolojileri bir mikroservis projesinde uygulanabilirlik ve birbirine bağı
 - Servisler arasında asenkron iletişim gerektiğinde Spring JMS yapılandırılabilir. Bu aşama daha çok ihtiyaç bazlıdır, diğer adımlardan sonra uygulanabilir.
 
 Bu sıralama ile mikroservis altyapısını kurarken, bağımlılıkları göz önünde bulundurarak aşamalı bir yaklaşım izleyebiliriz.
+
+## Çalıştırma Sırası
+Microservices projelerinde servislerin çalıştırılma sırası genellikle bağımlılıkları ve birbirine erişme gereksinimleri doğrultusunda belirlenir. İşte yaygın bir çalıştırma sırası:
+
+1. **Eureka Server**: Eureka Server, servis keşfi için merkezi bir bileşendir. Diğer servislerin birbirini bulabilmesi için öncelikle başlatılması gerekir. Bu nedenle, ilk olarak Eureka Server başlatılmalıdır. Diğer servisler Eureka Server'a bağlanarak kendilerini kaydeder ve buradan diğer servislere ulaşabilir.
+
+2. **Config Server**: Config Server, mikroservislerin konfigürasyon dosyalarını merkezi olarak yönetir. Servislerin konfigürasyon bilgilerini Config Server üzerinden alabilmeleri için Config Server'ın ikinci sırada başlatılması uygundur. Bu sayede, diğer servisler başlatıldığında konfigürasyonlarını doğrudan Config Server'dan alabilir.
+
+3. **Address-Service (veya diğer iş servisleri)**: Config Server ve Eureka Server çalışır durumda olduğunda, iş servisleri başlatılabilir. Örneğin, address-service gibi mikroservisler konfigürasyonlarını Config Server’dan alır ve Eureka Server’a kaydolur. Böylece diğer servislerle etkileşime geçebilirler.
+
+4. **API Gateway**: API Gateway, tüm servislerin üzerinden geçtiği bir erişim noktasıdır. Genellikle en son başlatılır çünkü diğer servisler Gateway'e bağlanır ve Gateway de bu servisleri yönlendirme görevini üstlenir.
+
+Bu sıralama ile her servis, gereken bağımlılıklar mevcut olduğu sürece sorunsuz bir şekilde çalışır ve birbirlerine erişebilir.
