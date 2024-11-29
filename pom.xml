@@ -28,6 +28,7 @@
     <description>_1_EurekaServer</description>
 
     <url>https://github.com/hamitmizrak/THY_1_EurekaServer.git</url>
+
     <licenses>
         <license>
             <name>MIT License</name>
@@ -35,6 +36,7 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+
     <developers>
         <developer>
             <id>hamitmizrak</id>
@@ -42,6 +44,7 @@
             <email>hamitmizrak@gmail.com</email>
         </developer>
     </developers>
+
     <scm>
         <connection>scm:git:https://github.com/hamitmizrak/THY_1_EurekaServer.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/hamitmizrak/THY_1_EurekaServer.git</developerConnection>
